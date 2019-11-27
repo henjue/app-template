@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AppTemplate</string>
+    <string name="button_allow">Allow</string>
+    <string name="button_deny">Deny</string>
+</resources>

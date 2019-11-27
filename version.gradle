@@ -1,0 +1,50 @@
+import java.util.function.Consumer
+import java.util.regex.Pattern
+
+
+def isReleaseTask(str) {
+    Pattern pattern = Pattern.compile("assemble(\\w*)(Release)")
+    def find = pattern.matcher(str).find()
+    return find
+}
+
+def getVersionCode() {
+
+    def file = new File(getRootDir(), "version.properties")
+    if (file.exists()) {
+
+        Properties p = new Properties()
+        p.load(new FileInputStream(file))
+        long currentCode = p.getProperty("version.code", "100000").toLong()
+        gradle.startParameter.taskNames.forEach(new Consumer<String>() {
+            @Override
+            void accept(String s) {
+                if (isReleaseTask(s)) {
+                    currentCode++
+                    p.setProperty("version.code", "" + currentCode)
+                    def fileOutputStream = new FileOutputStream(file)
+                    p.store(fileOutputStream, "")
+                    fileOutputStream.close()
+                }
+            }
+        })
+        return currentCode
+    };
+    return 0
+}
+
+def getVersionName(versionCode) {
+    def t1 = String.valueOf(versionCode)
+    def p = Pattern.compile("(\\d{2})(\\d{2})(\\d{2})")
+    def m = p.matcher(t1)
+    m.find()
+    def v1 = m.group(1).replaceAll("0", "")
+    def v2 = m.group(2).replaceAll("00", "0").toInteger().toString()
+    def v3 = m.group(3).replaceAll("00", "0").toInteger().toString()
+    return String.format("%s.%s.%s", v1, v2, v3)
+}
+
+def auto_version_code = getVersionCode()
+def auto_version_name = getVersionName(auto_version_code)
+rootProject.ext.auto_version_code = auto_version_code
+rootProject.ext.auto_version_name = auto_version_name

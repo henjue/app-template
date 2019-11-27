@@ -1,0 +1,171 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlin-kapt'
+apply from: '../version.gradle'
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "io.j99.app.template"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.auto_version_code as int
+        versionName rootProject.ext.auto_version_name
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    signingConfigs {
+        release {
+            keyAlias KEY_RELEASE_ALIAS
+            keyPassword KEY_RELEASE_PASS
+            storeFile file(KEY_STORE_PATH)
+            storePassword KEY_STORE_PASS
+            v2SigningEnabled true
+        }
+        debug {
+            keyAlias KEY_DEBUG_ALIAS
+            keyPassword KEY_RELEASE_PASS
+            storeFile file(KEY_STORE_PATH)
+            storePassword KEY_STORE_PASS
+            v2SigningEnabled true
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            debuggable true
+            jniDebuggable true
+            minifyEnabled false
+            zipAlignEnabled true
+            shrinkResources false
+            buildConfigField 'String', 'API_SERVER', '"https://www.baidu.com"'
+        }
+        release {
+            signingConfig signingConfigs.release
+            debuggable false
+            jniDebuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFiles fileTree(dir: 'rules', include: ['*.pro']).asList().toArray()
+            buildConfigField 'String', 'API_SERVER', '"https://www.baidu.com"'
+        }
+    }
+    androidExtensions {
+        //支持kotlin方式的Parcelable
+        experimental = true
+    }
+    dataBinding {
+        enabled = true
+    }
+    //new add
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+    compileOptions {
+        targetCompatibility = '1.8'
+        sourceCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    testImplementation 'junit:junit:4.12'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //http
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    //rxjava
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    //ui
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "com.github.bumptech.glide:okhttp3-integration:$glideVersion"
+    implementation "jp.wasabeef:glide-transformations:4.0.1"
+    implementation "androidx.core:core-ktx:$androidXVersion"
+    implementation "androidx.appcompat:appcompat:$androidXVersion"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.appcompat:appcompat:$androidXVersion"
+    implementation "com.google.android.material:material:1.0.0"
+    implementation "androidx.recyclerview:recyclerview:$androidXVersion"
+    implementation "androidx.cardview:cardview:1.0.0"
+
+    //lifecycler
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // For Kotlin use kapt instead of annotationProcessor
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+
+
+    //work
+    // (Java only)
+    implementation "androidx.work:work-runtime:$work_version"
+    // Kotlin + coroutines
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    // optional - RxJava2 support
+    implementation "androidx.work:work-rxjava2:$work_version"
+    // optional - GCMNetworkManager support
+    implementation "androidx.work:work-gcm:$work_version"
+
+
+    //navigation
+    // Java
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$dagger2"
+    kapt "com.google.dagger:dagger-compiler:$dagger2"
+    implementation "com.google.dagger:dagger-android:$dagger2"
+    implementation "com.google.dagger:dagger-android-support:$dagger2"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2"
+
+    //permissions
+    implementation "org.permissionsdispatcher:permissionsdispatcher:4.5.0"
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
+
+
+}

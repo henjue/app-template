@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base" parent="Theme.AppCompat">
+        <item name="android:windowBackground">#ffffff</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:textColor">#fff</item>
+        <item name="paddingStatusBarHeight">@dimen/paddingStatusBarHeight</item>
+        <!--        <item name="navigationIcon">@mipmap/back</item>-->
+    </style>
+
+    <style name="Base.Light" parent="Theme.AppCompat.Light">
+        <item name="android:windowBackground">#ffffff</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="paddingStatusBarHeight">@dimen/paddingStatusBarHeight</item>
+        <!--        <item name="navigationIcon">@mipmap/back</item>-->
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base" />
+
+
+    <style name="AppTheme.Light" parent="Base.Light" />
+</resources>

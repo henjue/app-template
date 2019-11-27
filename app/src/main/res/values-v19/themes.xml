@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.v19" parent="Base">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.v19" />
+
+    <style name="Base.v19.Light" parent="Base.Light">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="Base.v19.Light" />
+</resources>

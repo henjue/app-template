@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.v23" parent="Base.v21">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.v23" />
+
+    <style name="Base.v23.Light" parent="Base.v21.Light">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="Base.v23.Light" />
+</resources>
