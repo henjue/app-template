@@ -24,7 +24,6 @@ class MainActivity : AbstractTitleActivity() {
     @Inject
     lateinit var userInfoDao: UserInfoDao
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

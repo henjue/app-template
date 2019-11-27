@@ -1,13 +1,12 @@
 package io.j99.app.template.ui.main.view
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-
+import androidx.lifecycle.ViewModelProviders
 import io.j99.app.template.R
 import io.j99.app.template.di.Injectable
 import io.j99.app.template.ui.main.vm.HomePageViewModel
@@ -20,6 +19,7 @@ class HomePageFragment : Fragment(), Injectable {
     }
 
     private lateinit var pageViewModel: HomePageViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
